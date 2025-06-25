@@ -3,12 +3,14 @@ import time
 import lcd
 import motion
 import buzzer
+import servo
 
 
 def main():
     motion_sensor = motion.MotionSensor(24)
     lcd16x2 = lcd.Lcd(0x27)
     buzz = buzzer.Buzzer(7)
+    serv = servo.Servo(17, -90)
 
     lcd16x2.print_waiting()
 
@@ -35,6 +37,9 @@ def main():
     if is_detect_approved:
         lcd16x2.print_approved()
         buzz.sound_accept()
+        serv.set_deg(90)
+        time.sleep(5)
+        serv.set_deg(-90)
         # TODO: API request
     else:
         lcd16x2.print_rejected()
