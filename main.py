@@ -1,5 +1,7 @@
-import motion
 import time
+import servo
+
+
 def main():
     # モーション反応待ち
     # Webカメラ撮影
@@ -9,13 +11,20 @@ def main():
     # API Request
 
     # This is test.
-    mot = motion.MotionSensor(24)
+    srv = servo.Servo(17, 90)
     try:
         while True:
-            print("O" if mot.get_is_moved() else "X")
-            time.sleep(1)
-    except KeyboardInterrupt:
-        mot.close()
+            print("Press Enter to move servo...")
+            input()
 
-if __name__=='__main__':
+            srv.set_deg(-90)
+            print("Open action")
+            time.sleep(5)
+            srv.set_deg(90)
+            print("Done!", end="\n\n")
+    except KeyboardInterrupt:
+        srv.close()
+
+
+if __name__ == '__main__':
     main()
