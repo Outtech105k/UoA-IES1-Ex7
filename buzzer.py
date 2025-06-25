@@ -14,9 +14,8 @@ class Buzzer:
         time.sleep(off_sec)
 
     def sound_wait(self):
-        for i in range(3):
-            self.sound(0.1, 0.9)
-        
+        self.sound(0.1, 0.9)
+
     def sound_accept(self):
         self.sound(0.1, 0.3)
         self.sound(0.5)

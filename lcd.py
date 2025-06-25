@@ -31,7 +31,6 @@ class Lcd:
         LCD1602.write(0, 1, '- \xb4\xd7\xb0 \xca\xaf\xbe\xb2! -')
 
     def print_waiting(self):
-        self.clear()
         now = datetime.datetime.now()
         LCD1602.write(0, 0, now.strftime('%Y/%m/%d %H:%M'))
-        LCD1602.write(0, 1, 'Waiting motion...')
+        LCD1602.write(0, 1, 'Waiting motion..')
