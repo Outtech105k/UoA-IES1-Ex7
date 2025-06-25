@@ -1,3 +1,5 @@
+import time
+
 import lcd
 import motion
 import buzzer
@@ -8,19 +10,23 @@ def main():
     lcd16x2 = lcd.Lcd(0x27)
     buzz = buzzer.Buzzer(7)
 
+    lcd16x2.print_waiting()
+
     # モーション反応待ち
     seq_count = 0
     while True:
         if motion_sensor.get_is_moved():
             seq_count += 1
+            print(seq_count)
             if seq_count >= 10:
                 break
         else:
             seq_count = 0
+        time.sleep(0.1)
 
     # Webカメラ撮影
     # TODO: Implement here
-    lcd16x2.print_waiting()
+    lcd16x2.print_detecting()
     for i in range(5):
         buzz.sound_wait()
     is_detect_approved = True
