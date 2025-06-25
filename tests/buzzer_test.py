@@ -17,4 +17,3 @@ buz = Buzzer(7)
 
 buz.sound(0.2, 0.1)
 buz.sound(0.8)
-
