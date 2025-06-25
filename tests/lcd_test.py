@@ -2,13 +2,24 @@ import LCD1602
 import time
 import datetime
 
+
 def setup():
-    LCD1602.init(0x27, 1) 
+    LCD1602.init(0x27, 1)
+
 
 MSG = {
-        'detecting': ['Face Detecting..', '\xb6\xb5 \xc6\xdd\xbc\xae\xb3\xc1\xad\xb3'],
-        'approved': ['() Approved!', '\xc6\xdd\xbc\xae\xb3 \xbe\xb2\xba\xb3'],
-        'rejected': ['>< Rejected!', '\xc6\xdd\xbc\xae\xb3 \xbc\xaf\xca\xdf\xb2!'],
+        'detecting': [
+            'Face Detecting..',
+            '\xb6\xb5 \xc6\xdd\xbc\xae\xb3\xc1\xad\xb3',
+            ],
+        'approved': [
+            '() Approved!',
+            '\xc6\xdd\xbc\xae\xb3 \xbe\xb2\xba\xb3',
+            ],
+        'rejected': [
+            '>< Rejected!',
+            '\xc6\xdd\xbc\xae\xb3 \xbc\xaf\xca\xdf\xb2!',
+            ],
         'error': ['- ERROR! - ', '- \xb4\xd7\xb0 \xca\xaf\xbe\xb2! -'],
         }
 
@@ -44,4 +55,3 @@ try:
 
 except KeyboardInterrupt:
     pass
-

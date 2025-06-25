@@ -1,5 +1,5 @@
 import time
-import buzzer
+import lcd
 
 
 def main():
@@ -11,22 +11,21 @@ def main():
     # API Request
 
     # This is test.
-    buz = buzzer.Buzzer(7)
-
-    print("Wait")
-    buz.sound_wait()
+    indicator = lcd.Lcd(0x27)
+    indicator.print_detecting()
+    time.sleep(2)
+    indicator.print_approved()
+    time.sleep(2)
+    indicator.print_rejected()
+    time.sleep(2)
+    indicator.print_error()
     time.sleep(2)
 
-    print("Accept")
-    buz.sound_accept()
-    time.sleep(2)
-
-    print("Reject")
-    buz.sound_reject()
-    time.sleep(2)
-
-    print("Error")
-    buz.sound_error()
+    try:
+        indicator.print_waiting()
+        time.sleep(0.2)
+    except KeyboardInterrupt:
+        pass
 
 
 if __name__ == '__main__':
