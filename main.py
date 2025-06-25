@@ -1,5 +1,5 @@
 import time
-import servo
+import buzzer
 
 
 def main():
@@ -11,19 +11,22 @@ def main():
     # API Request
 
     # This is test.
-    srv = servo.Servo(17, 90)
-    try:
-        while True:
-            print("Press Enter to move servo...")
-            input()
+    buz = buzzer.Buzzer(7)
 
-            srv.set_deg(-90)
-            print("Open action")
-            time.sleep(5)
-            srv.set_deg(90)
-            print("Done!", end="\n\n")
-    except KeyboardInterrupt:
-        srv.close()
+    print("Wait")
+    buz.sound_wait()
+    time.sleep(2)
+
+    print("Accept")
+    buz.sound_accept()
+    time.sleep(2)
+
+    print("Reject")
+    buz.sound_reject()
+    time.sleep(2)
+
+    print("Error")
+    buz.sound_error()
 
 
 if __name__ == '__main__':

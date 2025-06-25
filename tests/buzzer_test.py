@@ -1,6 +1,7 @@
 import gpiozero
 import time
 
+
 class Buzzer:
     def __init__(self, pin):
         self.buz = gpiozero.DigitalOutputDevice(pin=pin)
@@ -10,6 +11,7 @@ class Buzzer:
         time.sleep(on_sec)
         self.buz.off()
         time.sleep(off_sec)
+
 
 buz = Buzzer(7)
 

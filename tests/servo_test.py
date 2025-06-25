@@ -23,4 +23,3 @@ try:
 
 except KeyboardInterrupt:
     servo.close()
-
