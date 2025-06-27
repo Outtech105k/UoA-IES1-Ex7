@@ -45,7 +45,7 @@ def main():
             result_queue: queue.Queue[bool] = queue.Queue()
             detect_thread = threading.Thread(
                 target=detect_task,
-                args=(result_queue),
+                args=(result_queue,),
                 daemon=True
                 )
             detect_thread.start()
