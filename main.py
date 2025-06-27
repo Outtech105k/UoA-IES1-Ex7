@@ -1,9 +1,18 @@
 import time
+import threading
+import random
 
 import lcd
 import motion
 import buzzer
 import servo
+
+
+def detect_task(thread: threading.Thread):
+    # TODO: Implement
+    wait_time = random.randrange(30, 100)/10
+    print(f'{wait_time}s waiting...')
+    time.sleep(wait_time)
 
 
 def main():
@@ -28,11 +37,15 @@ def main():
                     seq_count = 0
                 time.sleep(0.1)
 
-            # Webカメラ撮影
+            # Webカメラ撮影 (並行処理)
             # TODO: Implement here
             lcd16x2.print_detecting()
-            for i in range(5):
+
+            detect_thread = threading.Thread(target=detect_task, daemon=True)
+            detect_thread.start()
+            while detect_thread.is_alive():
                 buzz.sound_wait()
+            detect_thread.join()
             is_detect_approved = True
 
             # 一致で分岐
