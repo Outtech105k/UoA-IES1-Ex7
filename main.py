@@ -1,6 +1,7 @@
 import time
 import threading
 import random
+import queue
 
 import lcd
 import motion
@@ -8,11 +9,12 @@ import buzzer
 import servo
 
 
-def detect_task():
-    # TODO: Implement
+def detect_task(result_q: queue.Queue[bool]):
+    # TODO: Implement here
     wait_time = random.randrange(30, 100)/10
     print(f'{wait_time}s waiting...')
     time.sleep(wait_time)
+    result_q.put(True)
 
 
 def main():
@@ -31,29 +33,33 @@ def main():
                 if motion_sensor.get_is_moved():
                     seq_count += 1
                     print(seq_count)
-                    if seq_count >= 10:
+                    if seq_count >= 10:  # TODO: More count times
                         break
                 else:
                     seq_count = 0
                 time.sleep(0.1)
 
             # Webカメラ撮影 (並行処理)
-            # TODO: Implement here
             lcd16x2.print_detecting()
 
-            detect_thread = threading.Thread(target=detect_task, daemon=True)
+            result_queue: queue.Queue[bool] = queue.Queue()
+            detect_thread = threading.Thread(
+                target=detect_task,
+                args=(result_queue),
+                daemon=True
+                )
             detect_thread.start()
             while detect_thread.is_alive():
                 buzz.sound_wait()
             detect_thread.join()
-            is_detect_approved = True
+            is_detect_approved = result_queue.get()
 
-            # 一致で分岐
+            # 顔認証の成功可否で分岐
             if is_detect_approved:
                 lcd16x2.print_approved()
                 buzz.sound_accept()
                 serv.set_deg(90)
-                time.sleep(5)
+                time.sleep(5)  # TODO: 5s -> 20s
                 serv.set_deg(-90)
                 # TODO: API request
             else:
@@ -62,7 +68,7 @@ def main():
                 # TODO: API request
 
     except KeyboardInterrupt:
-        lcd16x2.print_error()
+        lcd16x2.clear()
         motion_sensor.close()
         serv.close()
 
