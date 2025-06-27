@@ -8,7 +8,7 @@ import buzzer
 import servo
 
 
-def detect_task(thread: threading.Thread):
+def detect_task():
     # TODO: Implement
     wait_time = random.randrange(30, 100)/10
     print(f'{wait_time}s waiting...')
