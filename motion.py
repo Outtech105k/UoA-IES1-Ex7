@@ -1,5 +1,6 @@
 import gpiozero
 
+
 class MotionSensor:
     def __init__(self, gpio_pin: int):
         self.sensor = gpiozero.DigitalInputDevice(pin=gpio_pin, pull_up=False)
