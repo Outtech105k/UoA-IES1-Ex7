@@ -7,6 +7,7 @@ import lcd
 import motion
 import buzzer
 import servo
+import webapi
 
 
 def detect_task(result_q: queue.Queue[bool]):
@@ -22,6 +23,7 @@ def main():
     lcd16x2 = lcd.Lcd(0x27)
     buzz = buzzer.Buzzer(7)
     serv = servo.Servo(17, -90)
+    api = webapi.WebApi()
 
     try:
         while True:
@@ -61,11 +63,11 @@ def main():
                 serv.set_deg(90)
                 time.sleep(5)  # TODO: 5s -> 20s
                 serv.set_deg(-90)
-                # TODO: API request
+                api.approve_post()
             else:
                 lcd16x2.print_rejected()
                 buzz.sound_reject()
-                # TODO: API request
+                api.reject_post()
 
     except KeyboardInterrupt:
         lcd16x2.clear()
