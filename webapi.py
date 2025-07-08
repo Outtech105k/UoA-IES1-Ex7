@@ -8,7 +8,7 @@ class ApiRequestException(Exception):
         return "API Error"
 
 class WebApi:
-    url = "http://facedetect.outtech105.com/api"
+    url = "https://facedetect.outtech105.com/api"
 
     def approve_post(self):
         now_jst = datetime.datetime.now(zoneinfo.ZoneInfo("Asia/Tokyo"))
