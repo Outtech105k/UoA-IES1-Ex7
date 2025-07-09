@@ -5,7 +5,7 @@ import numpy as np
 
 
 class Detect:
-    def __main__(self):
+    def __init__(self):
         self.interpreter = tf.lite.Interpreter("./facemodel.tflite")
         self.interpreter.allocate_tensors()
 
