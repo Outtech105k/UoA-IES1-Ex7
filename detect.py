@@ -24,6 +24,7 @@ class Detect:
     def detect_task(self, result_q: queue.Queue[bool]):
         ok_count = 0
         for i in range(self.detect_times):
+            print(f"Detect: {i}")
             _, img = self.cap.read()
 
             input_details = self.interpreter.get_input_details()
@@ -46,7 +47,10 @@ class Detect:
 
             maxindex = np.argmax(predictions)
             if self.classname[maxindex] == "authorized":
+                print("OK")
                 ok_count += 1
+            else:
+                print("NG")
 
         if (ok_count * 2) >= self.detect_times:
             result_q.put(True)
