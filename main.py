@@ -18,6 +18,9 @@ def main():
     api = webapi.WebApi()
     facedct = detect.Detect()
 
+    def detect_task(resurlt_queue: queue.Queue[bool]):
+        facedct.detect_task(result_queue)
+
     try:
         while True:
             lcd16x2.print_waiting()
@@ -39,7 +42,7 @@ def main():
 
             result_queue: queue.Queue[bool] = queue.Queue()
             detect_thread = threading.Thread(
-                target=facedct.detect_task, args=(result_queue,), daemon=True
+                target=detect_task, args=(result_queue,), daemon=True
             )
             detect_thread.start()
             while detect_thread.is_alive():
