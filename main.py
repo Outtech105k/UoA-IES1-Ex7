@@ -1,6 +1,5 @@
 import time
 import threading
-import random
 import queue
 
 import lcd
@@ -8,14 +7,7 @@ import motion
 import buzzer
 import servo
 import webapi
-
-
-def detect_task(result_q: queue.Queue[bool]):
-    # TODO: Implement here
-    wait_time = random.randrange(30, 100)/10
-    print(f'{wait_time}s waiting...')
-    time.sleep(wait_time)
-    result_q.put(True)
+import detect
 
 
 def main():
@@ -24,6 +16,7 @@ def main():
     buzz = buzzer.Buzzer(7)
     serv = servo.Servo(17, -90)
     api = webapi.WebApi()
+    facedct = detect.Detect()
 
     try:
         while True:
@@ -46,10 +39,8 @@ def main():
 
             result_queue: queue.Queue[bool] = queue.Queue()
             detect_thread = threading.Thread(
-                target=detect_task,
-                args=(result_queue,),
-                daemon=True
-                )
+                target=facedct.detect_task, args=(result_queue,), daemon=True
+            )
             detect_thread.start()
             while detect_thread.is_alive():
                 buzz.sound_wait()
@@ -75,5 +66,5 @@ def main():
         serv.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
