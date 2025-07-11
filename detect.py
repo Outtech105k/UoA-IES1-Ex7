@@ -68,7 +68,7 @@ class Detect:
             if prediction_label == "authorized":
                 ok_count += 1
 
-            time.sleep(0.2)  # 小休止（200ms）
+            time.sleep(0.8)  # 小休止（800ms）
 
         # 最終判定
         result = ok_count * 2 >= self.detect_times
